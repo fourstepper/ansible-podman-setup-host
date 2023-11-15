@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible-role-podman-host
+# tasks file for ansible-podman-setup-host
 - name: Make sure podman is installed
   package:
     name: podman

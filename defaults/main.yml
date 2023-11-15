@@ -1,4 +1,4 @@
 ---
-# defaults file for ansible-role-podman-host
+# defaults file for ansible-podman-setup-host
 podman_unprivileged_user_name: containers
 podman_unprivileged_can_bind_privileged_ports: true
