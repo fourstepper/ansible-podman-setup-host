@@ -12,16 +12,17 @@
     sysctl_set: yes
     state: present
     reload: yes
+  when: podman_unprivileged_can_bind_privileged_ports
 
 - name: Add a podman-related unprivileged user
   ansible.builtin.user:
-    name: "{{ podman_host_unprivileged_user_name }}"
+    name: "{{ podman_unprivileged_user_name }}"
     shell: "/usr/bin/bash"
     comment: The user under which all Podman containers run
 
 - name: Enable linger for the unprivileged user
   command:
-    cmd: "loginctl enable-linger {{ podman_host_unprivileged_user_name }}"
+    cmd: "loginctl enable-linger {{ podman_unprivileged_user_name }}"
   changed_when: false
 
 - name: Enable the podman.socket
