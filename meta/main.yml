@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Robin Opletal
+  description: An Ansible role for setting up rootless Podman on a machine for the purpose of running containers
+
+  license: MIT
+
+  min_ansible_version: 2.1
+
+  platforms:
+    - name: Debian
+      versions:
+        - latest
+    - name: Fedora
+      versions:
+        - latest
+
+  galaxy_tags: ["podman", "webserver"]

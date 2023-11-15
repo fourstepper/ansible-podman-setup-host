@@ -1,0 +1,25 @@
+---
+# tasks file for ansible-role-podman-host
+- name: Make sure podman is installed
+  package:
+    name: podman
+    state: present
+
+- name: Allow unprivileged users to bind privileged ports
+  sysctl:
+    name: net.ipv4.ip_unprivileged_port_start
+    value: '80'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Check if linger is enabled
+  command:
+    cmd: "ls /var/lib/systemd/linger"
+  register: linger
+
+- name: Enable linger for unprivileged user
+  command:
+    cmd: "loginctl enable-linger {{ podman_host_unprivileged_user_name }}"
+  changed_when: false
+  when: "{{ podman_host_unprivileged_user_name }} not in linger.stdout"
