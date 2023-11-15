@@ -13,13 +13,20 @@
     state: present
     reload: yes
 
-- name: Check if linger is enabled
-  command:
-    cmd: "ls /var/lib/systemd/linger"
-  register: linger
+- name: Add a podman-related unprivileged user
+  ansible.builtin.user:
+    name: "{{ podman_host_unprivileged_user_name }}"
+    shell: "/usr/bin/bash"
+    comment: The user under which all Podman containers run
 
-- name: Enable linger for unprivileged user
+- name: Enable linger for the unprivileged user
   command:
     cmd: "loginctl enable-linger {{ podman_host_unprivileged_user_name }}"
   changed_when: false
-  when: "{{ podman_host_unprivileged_user_name }} not in linger.stdout"
+
+- name: Enable the podman.socket
+  systemd:
+    name: podman.socket
+    state: started
+    enabled: true
+    scope: user
