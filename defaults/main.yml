@@ -2,3 +2,15 @@
 # defaults file for ansible-podman-setup-host
 podman_unprivileged_user_name: containers
 podman_unprivileged_can_bind_privileged_ports: true
+
+podman_setup_host_required_packages:
+  Debian:
+    - podman
+    - slirp4netns
+    - uidmap
+    - netavark
+    - aardvark-dns
+  RedHat:
+    - podman
+    - slirp4netns
+    - shadow-utils

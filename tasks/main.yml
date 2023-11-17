@@ -1,18 +1,7 @@
 ---
-- name: Make sure packages for rootless podman are installed (RedHat-based distributions)
+- name: Make sure packages for rootless podman are installed
   package:
-    name: shadow-utils
-  when: ansible_facts['os_family'] == 'RedHat'
-
-
-- name: Make sure packages for rootless podman are installed (Debian-based distributions)
-  package:
-    name: uidmap
-  when: ansible_facts['os_family'] == 'Debian'
-
-- name: Make sure podman is installed
-  package:
-    name: podman
+    name: "{{  podman_setup_host_required_packages[ansible_facts['os_family']] }}"
 
 - name: Allow unprivileged users to bind privileged ports
   sysctl:
